@@ -26,6 +26,11 @@
 #include <sstream>
 #include <vector>
 
+#if (!defined(_WIN32) && !defined(_WIN64)) || defined(__linux__) || defined(__APPLE__)
+#include <cstring>
+#include <algorithm>
+#endif
+
 #define COMMENT_CHAR '#'
 #define REPLACE_LIST_DELIM '='
 #define ARG_HELP    "-h"
