@@ -13,8 +13,8 @@ Simply create your own Visual Studio project, or compile the source directly usi
 The source file can be compiled easily using gcc.
 > **Command Line Example:** g++ -std=c++11 -o TextReplaceApp TextReplaceApp.cpp
 ## Usage
->Example Usage: [APPNAME] -i [INPUT_PATH] -o [OUTPUT_PATH]
-> -h Prints the help menu.
-> -i Specifies input file path.      
-> -o Specifies output file path.        
+> Example Usage: [APPNAME] -i [INPUT_PATH] -o [OUTPUT_PATH]  
+> -h Prints the help menu.  
+> -i Specifies input file path.     
+> -o Specifies output file path.  
 > **Note:** Output file path argument can be omitted, but the program will overwrite the input file instead.
