@@ -13,6 +13,8 @@ Simply create your own Visual Studio project, or compile the source directly usi
 The source file can be compiled easily using gcc.
 > **Command Line Example:** g++ -std=c++11 -o TextReplaceApp TextReplaceApp.cpp
 ## Usage
+1. Populate words that you intend to replace in the file "replace_list.cfg".
+2. Run the executable.
 > Example Usage: [APPNAME] -i [INPUT_PATH] -o [OUTPUT_PATH]  
 > -h Prints the help menu.  
 > -i Specifies input file path.     
