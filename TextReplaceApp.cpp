@@ -25,10 +25,10 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 
 #if (!defined(_WIN32) && !defined(_WIN64)) || defined(__linux__) || defined(__APPLE__)
 #include <cstring>
-#include <algorithm>
 #endif
 
 #define COMMENT_CHAR '#'
