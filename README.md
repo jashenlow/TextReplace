@@ -5,6 +5,7 @@ A simple C++ app which finds and replaces text in a file based on a user-defined
 - Uses C++ Standard Library only.
 - No other third party APIs required.
 - Uses std::fstream for reading and writing, so any ASCII readable file would work.
+- Compatible with Windows and Unix-based systems.
 ## Compiling
 ### Windows (MSVC)
 Simply create your own Visual Studio project, or compile the source directly using the MSVC compiler via command line.
