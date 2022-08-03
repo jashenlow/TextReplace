@@ -32,7 +32,7 @@
 #endif
 
 #define COMMENT_CHAR '#'
-#define REPLACE_LIST_DELIM '='
+#define REPLACE_LIST_DELIM '|'
 #define ARG_HELP    "-h"
 #define ARG_INFILE  "-i"
 #define ARG_OUTFILE "-o"
@@ -55,18 +55,32 @@ bool ReadReplaceList(const char* filename, WordReplaceList& wordList)
         {
             if (lineText.front() != COMMENT_CHAR)   //Skip lines that are intended to be comments
             {
-                std::string::size_type delimPos = lineText.find(REPLACE_LIST_DELIM);
+                size_t delimPos = lineText.find(REPLACE_LIST_DELIM);
 
                 if (delimPos != std::string::npos)  //Skip lines that don't contain the delimiter character.
                 {
-                    lineText.erase(std::remove(lineText.begin(), lineText.end(), ' '), lineText.end());         //Remove any spaces in the line of text.
+                    //Check and remove any spaces on the left and right of the delimiter.
+                    if (lineText[delimPos - 1] == ' ')
+                    {
+                        lineText.erase(lineText.begin() + (delimPos - 1));
+                        delimPos = lineText.find(REPLACE_LIST_DELIM);
+                    }
+                    if (lineText[delimPos + 1] == ' ')
+                    {
+                        lineText.erase(lineText.begin() + (delimPos + 1));
+                        delimPos = lineText.find(REPLACE_LIST_DELIM);
+                    }
 
-                    if ((lineText.front() != REPLACE_LIST_DELIM) && (lineText.back() != REPLACE_LIST_DELIM))   //Skip line if the first or last character is the delimiter.
+                    //Ensure that there actually is a string to replace on the left side.
+                    if (lineText.front() != REPLACE_LIST_DELIM)
                     {
                         std::pair<std::string, std::string> wordPair;
 
-                        wordPair.first  = std::move(lineText.substr(0, delimPos - 1));
-                        wordPair.second = std::move(lineText.substr(delimPos, lineText.length() - delimPos));
+                        wordPair.first = std::move(lineText.substr(0, delimPos));
+                        
+                        if (lineText.back() != REPLACE_LIST_DELIM)
+                            wordPair.second = std::move(lineText.substr(delimPos + 1, lineText.length() - delimPos));
+                        
                         wordList.emplace_back(wordPair);
                     }
                 }                
@@ -197,15 +211,18 @@ int main(int argc, char** argv)
 
                     if (!storedFileText.empty())
                     {
+                        size_t lineCount = 0;
                         size_t lineReplaceCount = 0;
 
                         for (auto& line : storedFileText)   //Search each line for text to replace
                         {
                             bool lineEdited = false;
 
+                            lineCount++;
+
                             for (auto& word : wordList)
                             {
-                                std::string::size_type index = 0;
+                                size_t index = 0;
 
                                 while (index != std::string::npos)
                                 {
@@ -216,6 +233,7 @@ int main(int argc, char** argv)
                                         line.replace(index, word.first.length(), word.second, 0, word.second.length());
                                         index += word.second.length();
 
+                                        printf("\t[Line %zd]: Replaced \"%s\" with \"%s\"\n", lineCount, word.first.c_str(), word.second.c_str());
                                         lineEdited = true;
                                     }
                                 }
