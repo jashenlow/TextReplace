@@ -11,7 +11,7 @@ A simple C++ app which finds and replaces text in a file based on a user-defined
 Simply create your own Visual Studio project, or compile the source directly using the MSVC compiler via command line.
 > **Command Line Example:** `cl /O2 /EHsc TextReplaceApp.cpp`
 ### Linux/Mac
-The source file can be compiled easily using gcc.
+The source file can be compiled easily using g++.
 > **Command Line Example:** `g++ -std=c++11 -o TextReplaceApp TextReplaceApp.cpp`
 ## Usage
 1. Populate words that you intend to replace in the file "replace_list.cfg".
